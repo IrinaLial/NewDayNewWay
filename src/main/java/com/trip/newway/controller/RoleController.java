@@ -2,7 +2,6 @@ package com.trip.newway.controller;
 
 import com.trip.newway.dto.role.RoleDTO;
 import com.trip.newway.dto.role.SavedRoleDTO;
-import com.trip.newway.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -21,9 +21,8 @@ public class SupportServiceImpl implements SupportService {
         Support support = new Support();
         support.setSubject(supportDTO.getSubject());
         support.setText(supportDTO.getText());
-        support.setUser(supportDTO.getUser());
 
         Support savedSupport = supportRepository.save(support);
-        return new SupportDTO(savedSupport.getId(),savedSupport.getSubject(),savedSupport.getText(),savedSupport.getUser());
+        return new SupportDTO(savedSupport.getId(),savedSupport.getSubject(),savedSupport.getText());
     }
 }

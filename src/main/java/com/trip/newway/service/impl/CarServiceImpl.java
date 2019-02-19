@@ -3,7 +3,9 @@ package com.trip.newway.service.impl;
 import com.trip.newway.dto.car.CarDTO;
 import com.trip.newway.dto.car.ResponseCarDTO;
 import com.trip.newway.dto.car.SavedCarDTO;
+import com.trip.newway.exception.WrongOperationException;
 import com.trip.newway.model.Car;
+import com.trip.newway.model.User;
 import com.trip.newway.repository.CarRepository;
 import com.trip.newway.repository.UserRepository;
 import com.trip.newway.service.CarService;
@@ -21,6 +23,9 @@ public class CarServiceImpl implements CarService {
 
     @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public CarDTO save(SavedCarDTO carDTO) {
@@ -45,5 +50,12 @@ public class CarServiceImpl implements CarService {
         long count = carRepository.count();
 
         return new ResponseCarDTO(carDTOS,count);
+    }
+    public List<Car> findByUserId(Long userId) {
+        Assert.notNull(userId, "User id is null");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new WrongOperationException("User not found with id " + userId));
+
+        return carRepository.findByUserId(user.id);
     }
 }

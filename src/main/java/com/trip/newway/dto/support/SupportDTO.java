@@ -16,6 +16,5 @@ public class SupportDTO {
     private Long id;
     private String subject;
     private String text;
-    private User user;
 
 }

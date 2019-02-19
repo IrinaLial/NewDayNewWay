@@ -26,4 +26,5 @@ public class CarController {
         ResponseCarDTO responseCarDTO = carService.findAll(page);
         return new ResponseEntity<>(responseCarDTO,HttpStatus.OK);
     }
+
 }

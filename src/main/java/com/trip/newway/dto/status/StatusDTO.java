@@ -12,8 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 public class StatusDTO {
     private Long id;
-    private int full;
-    private int freePlace;
-    private int empty;
+    private String name;
 
 }

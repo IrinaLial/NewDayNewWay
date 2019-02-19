@@ -9,5 +9,4 @@ import lombok.Setter;
 public class SavedSupportDTO {
     private String subject;
     private String text;
-    private User user;
 }

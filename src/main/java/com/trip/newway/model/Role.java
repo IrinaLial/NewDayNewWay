@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     @Id
     @Column(name = "id")
@@ -17,9 +17,5 @@ public class Role {
 
     @Column(name = "name")
     private String name;
-
-//    @OneToMany
-//    @JoinColumn(name = "user_id")
-//    private User user;
 }
 

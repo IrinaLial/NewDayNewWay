@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class SavedStatusDTO {
     private int full;
-    private int freePlace;
-    private int empty;
+    private String name;
 }

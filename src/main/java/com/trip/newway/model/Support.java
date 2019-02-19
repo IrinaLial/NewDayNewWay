@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "support")
+@Table(name = "supports")
 public class Support {
 
     @Id
@@ -23,10 +23,6 @@ public class Support {
     @Column(name = "text")
     private String text;
 
-    @OneToOne
-            (fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id",referencedColumnName = "id")
-    private User user;
-
-
+    @Column(name = "user_id")
+    private Long userId;
 }

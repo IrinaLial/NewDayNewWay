@@ -3,7 +3,6 @@ package com.trip.newway.service.impl;
 import com.trip.newway.dto.user.ResponseUserDTO;
 import com.trip.newway.dto.user.SaveUsersDTO;
 import com.trip.newway.dto.user.UserDTO;
-import com.trip.newway.model.Direction;
 import com.trip.newway.model.Role;
 import com.trip.newway.model.User;
 import com.trip.newway.repository.RoleRepository;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
 import java.util.LinkedList;
 import java.util.List;
 

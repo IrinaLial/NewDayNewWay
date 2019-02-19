@@ -1,17 +1,14 @@
 package com.trip.newway.model;
 
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "direction")
+@Table(name = "directions")
 public class Direction {
     @Id
     @Column(name = "id")
@@ -21,18 +18,10 @@ public class Direction {
     @Column(name = "name")
     private String name;
 
-    @OneToOne
-            (fetch = FetchType.EAGER)
-    @JoinColumn(name="status_id",referencedColumnName = "id")
-    private Status status;
+    @Column(name ="status_id")
+    private int statusId;
 
-//    @ManyToMany(fetch = FetchType.EAGER,
-//            targetEntity = Direction.class,
-//            cascade = {CascadeType.MERGE})
-//    @JoinTable(name = "user_direction",
-//            joinColumns = @JoinColumn(name = "direction_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    private Set<User> user = new HashSet<>(0);
-
+    @Column(name ="users_id")
+    private Long userId;
 
 }

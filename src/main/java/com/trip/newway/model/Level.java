@@ -1,8 +1,5 @@
 package com.trip.newway.model;
 
-
-import com.sun.javafx.beans.IDProperty;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "level")
+@Table(name = "levels")
 public class Level {
     @Id
     @Column(name = "id")

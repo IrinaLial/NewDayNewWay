@@ -16,6 +16,5 @@ import lombok.*;
 public class DirectionDTO {
     private Long id;
     private String name;
-    private Status status;
 
 }
