@@ -28,13 +28,13 @@ public class DirectionServiceImpl implements DirectionService {
 
     @Override
     public DirectionDTO save(SavedDirectionDTO directionDTO) {
-        Assert.notNull(directionDTO,"direction is null");
+        Assert.notNull(directionDTO, "direction is null");
 
         Direction direction = new Direction();
         direction.setName(directionDTO.getName());
 
         Direction savedDirection = directionRepository.save(direction);
-        return new DirectionDTO(savedDirection.getId(),savedDirection.getName());
+        return new DirectionDTO(savedDirection.getId(), savedDirection.getName());
     }
     //todo ask
 
@@ -43,13 +43,13 @@ public class DirectionServiceImpl implements DirectionService {
         List<Direction> directions = directionRepository
                 .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
         List<DirectionDTO> directionDTOS = new LinkedList<>();
-        directions.forEach(s->{
-            DirectionDTO directionDTO = new DirectionDTO(s.getId(),s.getName());
+        directions.forEach(s -> {
+            DirectionDTO directionDTO = new DirectionDTO(s.getId(), s.getName());
             directionDTOS.add(directionDTO);
         });
         long count = directionRepository.count();
 
-        return new ResponseDirectionDTO(directionDTOS,count);
+        return new ResponseDirectionDTO(directionDTOS, count);
     }
 
     public List<Direction> findByUserId(Long userId, int page) {

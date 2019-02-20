@@ -19,6 +19,6 @@ public class Car {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "users_id")
+    @Column(name = "user_id")
     private Long userId;
 }

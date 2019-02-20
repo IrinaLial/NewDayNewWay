@@ -17,12 +17,12 @@ public class SupportServiceImpl implements SupportService {
 
     @Override
     public SupportDTO save(SavedSupportDTO supportDTO) {
-        Assert.notNull(supportDTO,"Support is null");
+        Assert.notNull(supportDTO, "Support is null");
         Support support = new Support();
         support.setSubject(supportDTO.getSubject());
         support.setText(supportDTO.getText());
 
         Support savedSupport = supportRepository.save(support);
-        return new SupportDTO(savedSupport.getId(),savedSupport.getSubject(),savedSupport.getText());
+        return new SupportDTO(savedSupport.getId(), savedSupport.getSubject(), savedSupport.getText());
     }
 }

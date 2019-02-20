@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface CarService {
 
-    CarDTO save (SavedCarDTO car);
+    CarDTO save(SavedCarDTO car);
 
-    ResponseCarDTO findAll (int page);
+    ResponseCarDTO findAll(int page);
 
     List<Car> findByUserId(Long userId);
 

@@ -17,7 +17,7 @@ public class SupportController {
     private SupportService supportService;
 
     @PostMapping
-    public ResponseEntity<SupportDTO> save(@RequestBody SavedSupportDTO support){
+    public ResponseEntity<SupportDTO> save(@RequestBody SavedSupportDTO support) {
         SupportDTO savedSupportDTO = supportService.save(support);
         return new ResponseEntity<>(savedSupportDTO, HttpStatus.OK);
     }

@@ -23,13 +23,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO save(SavedReviewDTO reviewDTO) {
-        Assert.notNull(reviewDTO,"place is null");
+        Assert.notNull(reviewDTO, "place is null");
         Review review = new Review();
         review.setStars(reviewDTO.getStars());
         review.setRecommendations(reviewDTO.getRecommendations());
 
         Review savedReview = reviewRepository.save(review);
-        return new ReviewDTO(savedReview.getId(),savedReview.getStars(),savedReview.getRecommendations());
+        return new ReviewDTO(savedReview.getId(), savedReview.getStars(), savedReview.getRecommendations());
     }
 
     @Override
@@ -37,13 +37,13 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviews = reviewRepository
                 .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
         List<ReviewDTO> reviewDTOS = new LinkedList<>();
-        reviews.forEach(s->{
-            ReviewDTO placeDTO = new ReviewDTO(s.getId(),s.getStars(),s.getRecommendations());
+        reviews.forEach(s -> {
+            ReviewDTO placeDTO = new ReviewDTO(s.getId(), s.getStars(), s.getRecommendations());
             reviewDTOS.add(placeDTO);
         });
         long count = reviewRepository.count();
 
-        return new ResponseReviewDTO(reviewDTOS,count);
+        return new ResponseReviewDTO(reviewDTOS, count);
     }
 
     @Override

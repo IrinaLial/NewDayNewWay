@@ -15,13 +15,14 @@ public class StatusServiceImpl implements StatusService {
 
     @Autowired
     private StatusRepository statusRepository;
+
     @Override
     public StatusDTO save(SavedStatusDTO statusDTO) {
-        Assert.notNull(statusDTO,"place is null");
+        Assert.notNull(statusDTO, "place is null");
         Status status = new Status();
         status.setName(statusDTO.getName());
 
-        Status savedStatus= statusRepository.save(status);
-        return new StatusDTO(savedStatus.getId(),savedStatus.getName());
+        Status savedStatus = statusRepository.save(status);
+        return new StatusDTO(savedStatus.getId(), savedStatus.getName());
     }
 }

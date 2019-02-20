@@ -16,21 +16,21 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> save(@RequestBody SavedReviewDTO review){
+    public ResponseEntity<ReviewDTO> save(@RequestBody SavedReviewDTO review) {
         ReviewDTO savedReviewDTO = reviewService.save(review);
         return new ResponseEntity<>(savedReviewDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<ResponseReviewDTO> findAll(@RequestParam int page){
+    public ResponseEntity<ResponseReviewDTO> findAll(@RequestParam int page) {
         ResponseReviewDTO responseReviewDTO = reviewService.findAll(page);
-        return new ResponseEntity<>(responseReviewDTO,HttpStatus.OK);
+        return new ResponseEntity<>(responseReviewDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<ReviewDTO>findByStars (@RequestParam int stars){
+    public ResponseEntity<ReviewDTO> findByStars(@RequestParam int stars) {
         final ReviewDTO reviewDTO = reviewService.findByStars(stars);
-        return new ResponseEntity<>(reviewDTO,HttpStatus.OK);
+        return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
 
     }
 }

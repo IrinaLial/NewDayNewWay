@@ -14,7 +14,7 @@ public class LevelController {
     private LevelService levelService;
 
     @PostMapping
-    public ResponseEntity<LevelDTO> save(@RequestBody SavedLevelDTO level){
+    public ResponseEntity<LevelDTO> save(@RequestBody SavedLevelDTO level) {
         LevelDTO savedLevelDTO = levelService.save(level);
         return new ResponseEntity<>(savedLevelDTO, HttpStatus.OK);
     }

@@ -21,26 +21,26 @@ public class DirectionController {
     private DirectionService directionService;
 
     @GetMapping
-    public ResponseEntity<ResponseDirectionDTO> findAll(@RequestParam int page){
+    public ResponseEntity<ResponseDirectionDTO> findAll(@RequestParam int page) {
         ResponseDirectionDTO responseDirectionDTO = directionService.findAll(page);
         return new ResponseEntity<>(responseDirectionDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity <DirectionDTO> save(@RequestBody SavedDirectionDTO direction){
+    public ResponseEntity<DirectionDTO> save(@RequestBody SavedDirectionDTO direction) {
         DirectionDTO savedDirectionDTO = directionService.save(direction);
-        return new ResponseEntity<>(savedDirectionDTO,HttpStatus.OK);
+        return new ResponseEntity<>(savedDirectionDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<DirectionDTO> findByName(@RequestParam String name){
+    public ResponseEntity<DirectionDTO> findByName(@RequestParam String name) {
         final DirectionDTO directionDTO = directionService.findByName(name);
         return new ResponseEntity<>(directionDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Direction>> findByUserId(@RequestParam Long userId, @RequestParam int page){
-        final List<Direction> directions =  directionService.findByUserId(userId,page);
-        return new ResponseEntity<>(directions,HttpStatus.OK);
+    public ResponseEntity<List<Direction>> findByUserId(@RequestParam Long userId, @RequestParam int page) {
+        final List<Direction> directions = directionService.findByUserId(userId, page);
+        return new ResponseEntity<>(directions, HttpStatus.OK);
     }
 }

@@ -22,27 +22,28 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public PlaceDTO save(SavedPlaceDTO placeDTO) {
-        Assert.notNull(placeDTO,"place is null");
+        Assert.notNull(placeDTO, "place is null");
         Place place = new Place();
         place.setName(placeDTO.getName());
         place.setLatitude(placeDTO.getLatitude());
         place.setLongitude(placeDTO.getLongitude());
 
         Place savedPlace = placeRepository.save(place);
-        return new PlaceDTO(savedPlace.getId(),savedPlace.getName(),savedPlace.getLatitude(),savedPlace.getLongitude());
+        return new PlaceDTO(savedPlace.getId(), savedPlace.getName(), savedPlace.getLatitude(), savedPlace.getLongitude());
     }
+
     @Override
     public ResponsePlaceDTO findAll(int page) {
         List<Place> places = placeRepository
                 .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
         List<PlaceDTO> placeDTOS = new LinkedList<>();
-        places.forEach(s->{
-            PlaceDTO placeDTO = new PlaceDTO(s.getId(),s.getName(),s.getLatitude(),s.getLongitude());
+        places.forEach(s -> {
+            PlaceDTO placeDTO = new PlaceDTO(s.getId(), s.getName(), s.getLatitude(), s.getLongitude());
             placeDTOS.add(placeDTO);
         });
         long count = placeRepository.count();
 
-        return new ResponsePlaceDTO(placeDTOS,count);
+        return new ResponsePlaceDTO(placeDTOS, count);
     }
 
     @Override

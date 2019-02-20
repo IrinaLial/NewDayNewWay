@@ -6,7 +6,8 @@ import com.trip.newway.dto.user.UserDTO;
 
 public interface UserService {
 
-    UserDTO save (SaveUsersDTO user);
+    UserDTO save(SaveUsersDTO user);
+
     ResponseUserDTO findAll(int page);
 
 }

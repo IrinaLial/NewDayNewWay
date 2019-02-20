@@ -18,10 +18,10 @@ public class Direction {
     @Column(name = "name")
     private String name;
 
-    @Column(name ="status_id")
+    @Column(name = "status_id")
     private int statusId;
 
-    @Column(name ="users_id")
+    @Column(name = "users_id")
     private Long userId;
 
 }

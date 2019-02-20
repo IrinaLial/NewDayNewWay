@@ -54,14 +54,14 @@ public class UsersServiceImpl implements UserService {
         List<User> user = userRepository
                 .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
         List<UserDTO> userDTOS = new LinkedList<>();
-        user.forEach(s->{
+        user.forEach(s -> {
             UserDTO dto = new UserDTO(s.id, s.getName(), s.getEmail(), s.isActive());
             userDTOS.add(dto);
         });
 
         long count = userRepository.count();
 
-        return new ResponseUserDTO(userDTOS,count);
+        return new ResponseUserDTO(userDTOS, count);
     }
 
 }

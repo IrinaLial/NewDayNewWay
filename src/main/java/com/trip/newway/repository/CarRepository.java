@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface CarRepository extends JpaRepository<Car,Long> {
+public interface CarRepository extends JpaRepository<Car, Long> {
 
     @Query("select new com.trip.newway.model.car (c.id, c.name)" + "from User u where u.id = :userId")
-    List<Car> findByUserId(@Param ("userId") Long userId);
+    List<Car> findByUserId(@Param("userId") Long userId);
 }

@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
         car.setName(carDTO.getName());
 
         Car savedCar = carRepository.save(car);
-        return new CarDTO(savedCar.getId(),savedCar.getName());
+        return new CarDTO(savedCar.getId(), savedCar.getName());
     }
 
     @Override
@@ -42,15 +42,16 @@ public class CarServiceImpl implements CarService {
         List<Car> car = carRepository
                 .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
         List<CarDTO> carDTOS = new LinkedList<>();
-        car.forEach(s ->{
-            CarDTO carDTO = new CarDTO(s.getId(),s.getName());
+        car.forEach(s -> {
+            CarDTO carDTO = new CarDTO(s.getId(), s.getName());
             carDTOS.add(carDTO);
         });
 
         long count = carRepository.count();
 
-        return new ResponseCarDTO(carDTOS,count);
+        return new ResponseCarDTO(carDTOS, count);
     }
+
     public List<Car> findByUserId(Long userId) {
         Assert.notNull(userId, "User id is null");
         User user = userRepository.findById(userId)

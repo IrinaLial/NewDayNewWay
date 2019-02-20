@@ -16,21 +16,21 @@ public class PlaceController {
     private PlaceService placeService;
 
     @PostMapping
-    public ResponseEntity<PlaceDTO> save(@RequestBody SavedPlaceDTO place){
+    public ResponseEntity<PlaceDTO> save(@RequestBody SavedPlaceDTO place) {
         PlaceDTO savedPlaceDTO = placeService.save(place);
         return new ResponseEntity<>(savedPlaceDTO, HttpStatus.OK);
     }
-    
+
     @GetMapping
-    public ResponseEntity<ResponsePlaceDTO> findAll(@RequestParam int page){
+    public ResponseEntity<ResponsePlaceDTO> findAll(@RequestParam int page) {
         ResponsePlaceDTO placeDTO = placeService.findAll(page);
-        return new ResponseEntity<>(placeDTO,HttpStatus.OK);
+        return new ResponseEntity<>(placeDTO, HttpStatus.OK);
     }
-    
+
     @GetMapping
-    public ResponseEntity<PlaceDTO>findByName(@RequestParam String name){
+    public ResponseEntity<PlaceDTO> findByName(@RequestParam String name) {
         final PlaceDTO placeDTO = placeService.findByName(name);
-        return new ResponseEntity<>(placeDTO,HttpStatus.OK);
+        return new ResponseEntity<>(placeDTO, HttpStatus.OK);
     }
 
 }

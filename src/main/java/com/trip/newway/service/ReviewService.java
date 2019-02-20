@@ -6,6 +6,8 @@ import com.trip.newway.dto.review.SavedReviewDTO;
 
 public interface ReviewService {
     ReviewDTO save(SavedReviewDTO review);
+
     ResponseReviewDTO findAll(int page);
+
     ReviewDTO findByStars(int stars);
 }

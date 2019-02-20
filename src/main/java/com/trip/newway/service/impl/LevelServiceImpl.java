@@ -16,11 +16,11 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public LevelDTO save(SavedLevelDTO levelDTO) {
-        Assert.notNull(levelDTO,"level is null");
+        Assert.notNull(levelDTO, "level is null");
 
         Level level = new Level();
         level.setName(levelDTO.getName());
         Level savedLevel = levelRepository.save(level);
-        return new LevelDTO(savedLevel.getId(),savedLevel.getName());
+        return new LevelDTO(savedLevel.getId(), savedLevel.getName());
     }
 }

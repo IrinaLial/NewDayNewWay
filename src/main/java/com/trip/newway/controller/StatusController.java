@@ -17,7 +17,7 @@ public class StatusController {
     private StatusService statusService;
 
     @PostMapping
-    public ResponseEntity<StatusDTO> save(@RequestBody SavedStatusDTO status){
+    public ResponseEntity<StatusDTO> save(@RequestBody SavedStatusDTO status) {
         StatusDTO savedStatusDTO = statusService.save(status);
         return new ResponseEntity<>(savedStatusDTO, HttpStatus.OK);
     }
