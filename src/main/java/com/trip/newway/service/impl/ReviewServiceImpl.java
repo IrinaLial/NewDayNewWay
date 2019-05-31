@@ -15,6 +15,8 @@ import org.springframework.util.Assert;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -49,6 +51,13 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewDTO findByStars(int stars) {
         return reviewRepository.findByStars(stars);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        reviewRepository.deleteById(id);
+
     }
 }
 //todo ask about "findByStars"

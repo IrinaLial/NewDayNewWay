@@ -21,7 +21,7 @@ public class Direction {
     @Column(name = "status_id")
     private int statusId;
 
-    @Column(name = "users_id")
+    @Column(name = "user_id")
     private Long userId;
 
 }

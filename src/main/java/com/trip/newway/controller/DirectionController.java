@@ -20,7 +20,7 @@ public class DirectionController {
     @Autowired
     private DirectionService directionService;
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<ResponseDirectionDTO> findAll(@RequestParam int page) {
         ResponseDirectionDTO responseDirectionDTO = directionService.findAll(page);
         return new ResponseEntity<>(responseDirectionDTO, HttpStatus.OK);
@@ -32,15 +32,21 @@ public class DirectionController {
         return new ResponseEntity<>(savedDirectionDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findByName")
     public ResponseEntity<DirectionDTO> findByName(@RequestParam String name) {
         final DirectionDTO directionDTO = directionService.findByName(name);
         return new ResponseEntity<>(directionDTO, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Direction>> findByUserId(@RequestParam Long userId, @RequestParam int page) {
-        final List<Direction> directions = directionService.findByUserId(userId, page);
+    @GetMapping("/findWithUserId")
+    public ResponseEntity<List<DirectionDTO>> findWithUserId(@RequestParam Long userId, @RequestParam int page) {
+        final List<DirectionDTO> directions = directionService.findWithUserId(userId, page);
         return new ResponseEntity<>(directions, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        directionService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

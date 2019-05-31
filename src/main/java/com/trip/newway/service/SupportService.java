@@ -7,4 +7,6 @@ public interface SupportService {
 
     SupportDTO save(SavedSupportDTO support);
 
+    void deleteById(Long id);
+
 }

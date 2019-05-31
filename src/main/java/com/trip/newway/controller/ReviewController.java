@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/review")
 public class ReviewController {
 
     @Autowired
@@ -21,16 +22,21 @@ public class ReviewController {
         return new ResponseEntity<>(savedReviewDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<ResponseReviewDTO> findAll(@RequestParam int page) {
         ResponseReviewDTO responseReviewDTO = reviewService.findAll(page);
         return new ResponseEntity<>(responseReviewDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findByStars")
     public ResponseEntity<ReviewDTO> findByStars(@RequestParam int stars) {
         final ReviewDTO reviewDTO = reviewService.findByStars(stars);
         return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
 
+    }
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        reviewService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

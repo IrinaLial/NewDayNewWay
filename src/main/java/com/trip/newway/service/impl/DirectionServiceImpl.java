@@ -18,6 +18,8 @@ import org.springframework.util.Assert;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class DirectionServiceImpl implements DirectionService {
 
@@ -52,12 +54,18 @@ public class DirectionServiceImpl implements DirectionService {
         return new ResponseDirectionDTO(directionDTOS, count);
     }
 
-    public List<Direction> findByUserId(Long userId, int page) {
+    public List<DirectionDTO> findWithUserId(Long userId, int page) {
         Assert.notNull(userId, "User id is null");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new WrongOperationException("User not found with id " + userId));
 
-        return directionRepository.findByUserId(user.id, PageRequest.of(page, Constants.LIMIT));
+        return directionRepository.findWithUserId(user.id, PageRequest.of(page, Constants.LIMIT));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        directionRepository.deleteById(id);
     }
 
     @Override

@@ -25,18 +25,14 @@ public class User {
     @Column(name = "password")
     public String password;
 
-
     @Column(name = "is_active")
     private boolean isActive;
 
     @Column(name = "level_id")
     private Long levelId;
 
-    @Column(name = "car_id")
-    private Long carId;
-
-    @Column(name = "direction_id")
-    private Long directionId;
+    @Column(name = "status_id")
+    private int statusId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")

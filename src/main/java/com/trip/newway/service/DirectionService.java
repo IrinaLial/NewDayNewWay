@@ -16,5 +16,7 @@ public interface DirectionService {
 
     DirectionDTO findByName(String name);
 
-    List<Direction> findByUserId(Long userId, int page);
+    List<DirectionDTO> findWithUserId(Long userId, int page);
+
+    void deleteById(Long id);
 }

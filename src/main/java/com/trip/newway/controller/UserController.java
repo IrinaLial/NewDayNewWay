@@ -9,10 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -24,9 +23,15 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<ResponseUserDTO> findAll(@RequestParam int page) {
         ResponseUserDTO userDTO = userService.findAll(page);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        userService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

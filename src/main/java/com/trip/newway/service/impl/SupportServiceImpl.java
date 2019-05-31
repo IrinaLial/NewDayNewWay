@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class SupportServiceImpl implements SupportService {
 
@@ -24,5 +26,11 @@ public class SupportServiceImpl implements SupportService {
 
         Support savedSupport = supportRepository.save(support);
         return new SupportDTO(savedSupport.getId(), savedSupport.getSubject(), savedSupport.getText());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        supportRepository.deleteById(id);
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.util.Assert;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class PlaceServiceImpl implements PlaceService {
     @Autowired
@@ -49,6 +51,12 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public PlaceDTO findByName(String name) {
         return placeRepository.findByName(name);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        placeRepository.deleteById(id);
     }
 }
 //todo ask about "findByName"

@@ -6,4 +6,6 @@ import com.trip.newway.dto.level.SavedLevelDTO;
 public interface LevelService {
 
     LevelDTO save(SavedLevelDTO level);
+
+    void deleteById(Long id);
 }

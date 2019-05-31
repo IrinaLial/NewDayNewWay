@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class StatusServiceImpl implements StatusService {
 
@@ -24,5 +26,11 @@ public class StatusServiceImpl implements StatusService {
 
         Status savedStatus = statusRepository.save(status);
         return new StatusDTO(savedStatus.getId(), savedStatus.getName());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        statusRepository.deleteById(id);
     }
 }

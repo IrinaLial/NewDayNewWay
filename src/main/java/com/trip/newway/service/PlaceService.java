@@ -10,4 +10,6 @@ public interface PlaceService {
     ResponsePlaceDTO findAll(int page);
 
     PlaceDTO findByName(String name);
+
+    void deleteById(Long id);
 }

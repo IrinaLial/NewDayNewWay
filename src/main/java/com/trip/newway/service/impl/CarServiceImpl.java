@@ -18,6 +18,8 @@ import org.springframework.util.Assert;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -52,11 +54,17 @@ public class CarServiceImpl implements CarService {
         return new ResponseCarDTO(carDTOS, count);
     }
 
-    public List<Car> findByUserId(Long userId) {
+    public List<CarDTO> findWithUserId(Long userId) {
         Assert.notNull(userId, "User id is null");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new WrongOperationException("User not found with id " + userId));
 
-        return carRepository.findByUserId(user.id);
+        return carRepository.findWithUserId(user.id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        carRepository.deleteById(id);
     }
 }

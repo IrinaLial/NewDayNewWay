@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/place")
 public class PlaceController {
 
     @Autowired
@@ -21,16 +22,22 @@ public class PlaceController {
         return new ResponseEntity<>(savedPlaceDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<ResponsePlaceDTO> findAll(@RequestParam int page) {
         ResponsePlaceDTO placeDTO = placeService.findAll(page);
         return new ResponseEntity<>(placeDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findByName")
     public ResponseEntity<PlaceDTO> findByName(@RequestParam String name) {
         final PlaceDTO placeDTO = placeService.findByName(name);
         return new ResponseEntity<>(placeDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        placeService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

@@ -10,4 +10,6 @@ public interface ReviewService {
     ResponseReviewDTO findAll(int page);
 
     ReviewDTO findByStars(int stars);
+
+    void deleteById(Long id);
 }

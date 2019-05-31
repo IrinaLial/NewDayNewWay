@@ -10,4 +10,6 @@ public interface UserService {
 
     ResponseUserDTO findAll(int page);
 
+    void deleteById(Long id);
+
 }

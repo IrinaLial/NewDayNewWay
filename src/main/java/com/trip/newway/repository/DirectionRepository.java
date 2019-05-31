@@ -14,6 +14,6 @@ public interface DirectionRepository extends JpaRepository<Direction, Long> {
   @Query("select new com.trip.newway.dto.direction.DirectionDTO (d.id, d.name) from Direction d where d.name = :name")
   DirectionDTO findByName(@Param("name") String name);
 
-  @Query("select new com.trip.newway.model.direction (d.id, d.name)" + "from User u where u.id = :userId")
-  List<Direction> findByUserId(@Param("userId") Long userId, Pageable pageable);
+  @Query("select new com.trip.newway.dto.direction.DirectionDTO (d.id, d.name) from Direction d, User u where d.userId = u.id and u.id = :userId")
+  List<DirectionDTO> findWithUserId(@Param("userId") Long userId, Pageable pageable);
 }

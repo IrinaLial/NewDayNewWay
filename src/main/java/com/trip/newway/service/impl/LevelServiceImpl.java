@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import static org.springframework.util.Assert.notNull;
+
 @Service
 public class LevelServiceImpl implements LevelService {
     @Autowired
@@ -22,5 +24,11 @@ public class LevelServiceImpl implements LevelService {
         level.setName(levelDTO.getName());
         Level savedLevel = levelRepository.save(level);
         return new LevelDTO(savedLevel.getId(), savedLevel.getName());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        levelRepository.deleteById(id);
     }
 }

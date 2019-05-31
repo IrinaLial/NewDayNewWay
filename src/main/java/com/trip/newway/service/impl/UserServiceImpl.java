@@ -3,6 +3,7 @@ package com.trip.newway.service.impl;
 import com.trip.newway.dto.user.ResponseUserDTO;
 import com.trip.newway.dto.user.SaveUsersDTO;
 import com.trip.newway.dto.user.UserDTO;
+import com.trip.newway.exception.EmailNotUniqueException;
 import com.trip.newway.model.Role;
 import com.trip.newway.model.User;
 import com.trip.newway.repository.RoleRepository;
@@ -16,12 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
 
+@Transactional
 @Service
-public class UsersServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
 
     @Autowired
@@ -30,9 +34,16 @@ public class UsersServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+
     @Override
     public UserDTO save(SaveUsersDTO userDTO) {
         Assert.notNull(userDTO, "user is null");
+
+        val presentByEmail =  userRepository.findByEmail(userDTO.getEmail());
+        if(presentByEmail!=null) {
+            throw new EmailNotUniqueException("email is already exist");
+        }
+
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
@@ -43,6 +54,9 @@ public class UsersServiceImpl implements UserService {
 
         Role role = roleRepository.findByName(Constants.ROLE_USER);
         user.setRole(role);
+        user.setLevelId(1L);
+        user.setActive(false);
+        user.setStatusId(Constants.EMPTY);
 
         User savedUser = userRepository.save(user);
         return new UserDTO(savedUser.getId(), savedUser.getName(),
@@ -62,6 +76,12 @@ public class UsersServiceImpl implements UserService {
         long count = userRepository.count();
 
         return new ResponseUserDTO(userDTOS, count);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        notNull(id, "id is null");
+        userRepository.deleteById(id);
     }
 
 }

@@ -25,16 +25,22 @@ public class CarController {
         return new ResponseEntity<>(savedCar, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<ResponseCarDTO> findAll(@RequestParam int page) {
         ResponseCarDTO responseCarDTO = carService.findAll(page);
         return new ResponseEntity<>(responseCarDTO, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Car>> findByUserId(@RequestParam Long userId) {
-        final List<Car> cars = carService.findByUserId(userId);
+    @GetMapping("/findWithUserId")
+    public ResponseEntity<List<CarDTO>> findWithUserId(@RequestParam Long userId) {
+        final List<CarDTO> cars = carService.findWithUserId(userId);
         return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        carService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

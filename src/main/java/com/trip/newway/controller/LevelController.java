@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/level")
 public class LevelController {
     @Autowired
     private LevelService levelService;
@@ -17,6 +18,12 @@ public class LevelController {
     public ResponseEntity<LevelDTO> save(@RequestBody SavedLevelDTO level) {
         LevelDTO savedLevelDTO = levelService.save(level);
         return new ResponseEntity<>(savedLevelDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam Long id) {
+        levelService.deleteById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
