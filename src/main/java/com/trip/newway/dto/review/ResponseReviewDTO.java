@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ResponseReviewDTO {
     private List<ReviewDTO> reviews;
-    private Long total;
+    private long total;
 }

@@ -9,6 +9,7 @@ import com.trip.newway.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,13 @@ public class DirectionController {
     @Autowired
     private DirectionService directionService;
 
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     @GetMapping("/findAll")
     public ResponseEntity<ResponseDirectionDTO> findAll(@RequestParam int page) {
         ResponseDirectionDTO responseDirectionDTO = directionService.findAll(page);
         return new ResponseEntity<>(responseDirectionDTO, HttpStatus.OK);
     }
-
+    @PreAuthorize(value = "hasAuthority('USER')")
     @PostMapping
     public ResponseEntity<DirectionDTO> save(@RequestBody SavedDirectionDTO direction) {
         DirectionDTO savedDirectionDTO = directionService.save(direction);

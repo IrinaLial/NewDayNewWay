@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.direction.DirectionDTO;
 import com.trip.newway.dto.direction.ResponseDirectionDTO;
 import com.trip.newway.dto.direction.SavedDirectionDTO;
@@ -42,16 +43,15 @@ public class DirectionServiceImpl implements DirectionService {
 
     @Override
     public ResponseDirectionDTO findAll(int page) {
-        List<Direction> directions = directionRepository
-                .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
-        List<DirectionDTO> directionDTOS = new LinkedList<>();
-        directions.forEach(s -> {
-            DirectionDTO directionDTO = new DirectionDTO(s.getId(), s.getName());
-            directionDTOS.add(directionDTO);
-        });
+        if(page < 0){
+            return new ResponseDirectionDTO(new LinkedList<>(), 0);
+        }
+        List<DirectionDTO> directions = directionRepository
+                .findDirections(PageRequest.of(page, Constants.LIMIT)).getContent();
+
         long count = directionRepository.count();
 
-        return new ResponseDirectionDTO(directionDTOS, count);
+        return new ResponseDirectionDTO(directions, count);
     }
 
     public List<DirectionDTO> findWithUserId(Long userId, int page) {
@@ -59,13 +59,15 @@ public class DirectionServiceImpl implements DirectionService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new WrongOperationException("User not found with id " + userId));
 
-        return directionRepository.findWithUserId(user.id, PageRequest.of(page, Constants.LIMIT));
+        return directionRepository.findWithUserId(user.getId(), PageRequest.of(page, Constants.LIMIT));
     }
 
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        directionRepository.deleteById(id);
+        final Direction direction = directionRepository.findById(id)
+                .orElseThrow(()-> new NoSuchEntityException("direction not found with id" + id));
+        directionRepository.deleteById(direction.getId());
     }
 
     @Override

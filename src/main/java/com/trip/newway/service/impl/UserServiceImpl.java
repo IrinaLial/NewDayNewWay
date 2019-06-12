@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.user.ResponseUserDTO;
 import com.trip.newway.dto.user.SaveUsersDTO;
 import com.trip.newway.dto.user.UserDTO;
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO save(SaveUsersDTO userDTO) {
         Assert.notNull(userDTO, "user is null");
 
-        val presentByEmail =  userRepository.findByEmail(userDTO.getEmail());
-        if(presentByEmail!=null) {
+        val presentByEmail = userRepository.findByEmail(userDTO.getEmail());
+        if (presentByEmail != null) {
             throw new EmailNotUniqueException("email is already exist");
         }
 
@@ -65,23 +66,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseUserDTO findAll(int page) {
-        List<User> user = userRepository
-                .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
-        List<UserDTO> userDTOS = new LinkedList<>();
-        user.forEach(s -> {
-            UserDTO dto = new UserDTO(s.id, s.getName(), s.getEmail(), s.isActive());
-            userDTOS.add(dto);
-        });
-
+        if (page < 0) {
+            return new ResponseUserDTO(new LinkedList<>(), 0);
+        }
+        List<UserDTO> users = userRepository
+                .findUsers(PageRequest.of(page, Constants.LIMIT)).getContent();
         long count = userRepository.count();
 
-        return new ResponseUserDTO(userDTOS, count);
+        return new ResponseUserDTO(users, count);
     }
 
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        userRepository.deleteById(id);
+        final User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchEntityException("User no found with id: " + id));
+        userRepository.deleteById(user.getId());
     }
-
 }

@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class ResponseUserDTO {
-    private List<UserDTO> user;
+    private List<UserDTO> users;
     private long total;
 }

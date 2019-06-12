@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.review.ResponseReviewDTO;
 import com.trip.newway.dto.review.ReviewDTO;
 import com.trip.newway.dto.review.SavedReviewDTO;
@@ -36,16 +37,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ResponseReviewDTO findAll(int page) {
-        List<Review> reviews = reviewRepository
-                .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
-        List<ReviewDTO> reviewDTOS = new LinkedList<>();
-        reviews.forEach(s -> {
-            ReviewDTO placeDTO = new ReviewDTO(s.getId(), s.getStars(), s.getRecommendations());
-            reviewDTOS.add(placeDTO);
-        });
+        if( page < 0){
+            return new ResponseReviewDTO(new LinkedList<>(),0);
+        }
+        List<ReviewDTO> reviews = reviewRepository
+                .findReviews(PageRequest.of(page, Constants.LIMIT)).getContent();
         long count = reviewRepository.count();
 
-        return new ResponseReviewDTO(reviewDTOS, count);
+        return new ResponseReviewDTO(reviews, count);
     }
 
     @Override
@@ -56,8 +55,8 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        reviewRepository.deleteById(id);
-
+        final Review review = reviewRepository.findById(id)
+                .orElseThrow(()->  new NoSuchEntityException("id isn`t found" + id));
+        reviewRepository.deleteById(review.getId());
     }
 }
-//todo ask about "findByStars"

@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.place.PlaceDTO;
 import com.trip.newway.dto.place.ResponsePlaceDTO;
 import com.trip.newway.dto.place.SavedPlaceDTO;
@@ -36,16 +37,14 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public ResponsePlaceDTO findAll(int page) {
-        List<Place> places = placeRepository
-                .findAll(PageRequest.of(page, Constants.LIMIT)).getContent();
-        List<PlaceDTO> placeDTOS = new LinkedList<>();
-        places.forEach(s -> {
-            PlaceDTO placeDTO = new PlaceDTO(s.getId(), s.getName(), s.getLatitude(), s.getLongitude());
-            placeDTOS.add(placeDTO);
-        });
+        if(page < 0){
+            return new ResponsePlaceDTO(new LinkedList<>(), 0);
+        }
+        List<PlaceDTO> places = placeRepository
+                .findPlaces(PageRequest.of(page, Constants.LIMIT)).getContent();
         long count = placeRepository.count();
 
-        return new ResponsePlaceDTO(placeDTOS, count);
+        return new ResponsePlaceDTO(places, count);
     }
 
     @Override
@@ -56,7 +55,9 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        placeRepository.deleteById(id);
+        final Place place = placeRepository.findById(id)
+                .orElseThrow(()-> new NoSuchEntityException("id isn`t found" + id));
+        placeRepository.deleteById(place.getId());
     }
 }
-//todo ask about "findByName"
+

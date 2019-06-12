@@ -6,6 +6,7 @@ import com.trip.newway.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class StatusController {
     @Autowired
     private StatusService statusService;
 
+    @PreAuthorize(value = "hasAuthority('USER')")
     @PostMapping
     public ResponseEntity<StatusDTO> save(@RequestBody SavedStatusDTO status) {
         StatusDTO savedStatusDTO = statusService.save(status);

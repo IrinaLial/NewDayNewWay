@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.level.LevelDTO;
 import com.trip.newway.dto.level.SavedLevelDTO;
 import com.trip.newway.model.Level;
@@ -29,6 +30,8 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        levelRepository.deleteById(id);
+        final Level level = levelRepository.findById(id)
+                .orElseThrow(()-> new NoSuchEntityException("id is not found" + id));
+        levelRepository.deleteById(level.getId());
     }
 }

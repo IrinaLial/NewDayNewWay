@@ -14,16 +14,16 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+    private Long id;
 
     @Column(name = "name")
-    public String name;
+    private String name;
     @Column(name = "email")
     @Email
-    public String email;
+    private String email;
 
     @Column(name = "password")
-    public String password;
+    private String password;
 
     @Column(name = "is_active")
     private boolean isActive;

@@ -7,6 +7,7 @@ import com.trip.newway.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,12 +18,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize(value = "hasAuthority('USER')")
     @PostMapping
     public ResponseEntity<UserDTO> save(@RequestBody SaveUsersDTO user) {
         UserDTO savedUser = userService.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     @GetMapping("/findAll")
     public ResponseEntity<ResponseUserDTO> findAll(@RequestParam int page) {
         ResponseUserDTO userDTO = userService.findAll(page);

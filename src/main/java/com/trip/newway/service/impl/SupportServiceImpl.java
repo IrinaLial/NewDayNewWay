@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.support.SavedSupportDTO;
 import com.trip.newway.dto.support.SupportDTO;
 import com.trip.newway.model.Support;
@@ -31,6 +32,8 @@ public class SupportServiceImpl implements SupportService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        supportRepository.deleteById(id);
+        final Support support = supportRepository.findById(id)
+                .orElseThrow(()-> new NoSuchEntityException("id isn`t found" + id));
+        supportRepository.deleteById(support.getId());
     }
 }

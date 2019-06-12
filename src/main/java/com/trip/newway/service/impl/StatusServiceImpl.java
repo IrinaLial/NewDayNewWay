@@ -1,5 +1,6 @@
 package com.trip.newway.service.impl;
 
+import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.dto.status.SavedStatusDTO;
 import com.trip.newway.dto.status.StatusDTO;
 import com.trip.newway.model.Status;
@@ -31,6 +32,8 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        statusRepository.deleteById(id);
+        final Status status = statusRepository.findById(id)
+                .orElseThrow(()-> new NoSuchEntityException("id isn`t found" +id));
+        statusRepository.deleteById(status.getId());
     }
 }
