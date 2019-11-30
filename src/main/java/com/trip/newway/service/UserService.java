@@ -6,10 +6,19 @@ import com.trip.newway.dto.user.UserDTO;
 
 public interface UserService {
 
+    boolean sendCode(String email);
+
     UserDTO save(SaveUsersDTO user);
+
+    boolean emailConfirmation(String email);
+
+    boolean emailCodeConfirm(String email,int code);
+
+    boolean passwordConfirm(String email,int code, String password);
 
     ResponseUserDTO findAll(int page);
 
     void deleteById(Long id);
+
 
 }

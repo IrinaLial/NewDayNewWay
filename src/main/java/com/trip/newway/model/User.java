@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -38,4 +39,6 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

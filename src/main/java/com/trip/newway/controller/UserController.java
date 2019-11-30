@@ -18,7 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize(value = "hasAuthority('USER')")
+    @PostMapping("/sendCode")
+    public ResponseEntity<Boolean> sendCode(@RequestParam String email) {
+        boolean sendCode = userService.sendCode(email);
+        return new ResponseEntity<>(sendCode,HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> save(@RequestBody SaveUsersDTO user) {
         UserDTO savedUser = userService.save(user);
@@ -37,4 +42,5 @@ public class UserController {
         userService.deleteById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
 }

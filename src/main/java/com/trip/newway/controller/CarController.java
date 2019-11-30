@@ -40,6 +40,7 @@ public class CarController {
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
+    @PreAuthorize(value = "hasAuthority('USER')")
     @DeleteMapping
     public ResponseEntity delete(@RequestParam Long id) {
         carService.deleteById(id);

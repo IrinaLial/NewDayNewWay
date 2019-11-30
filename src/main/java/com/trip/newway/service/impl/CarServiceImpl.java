@@ -15,11 +15,10 @@ import com.trip.newway.util.Constants;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.jws.Oneway;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +42,7 @@ public class CarServiceImpl implements CarService {
         Car car = new Car();
         car.setName(carDTO.getName());
         car.setUserId(user.getId());
+        car.setCreatedAt(LocalDateTime.now());
         Car savedCar = carRepository.save(car);
         return new CarDTO(savedCar.getId(), savedCar.getName());
     }
@@ -52,9 +52,9 @@ public class CarServiceImpl implements CarService {
         if(page < 0){
             return new ResponseCarDTO(new LinkedList<>(),0);
         }
-        List<CarDTO> cars = carRepository
+        final List<CarDTO> cars = carRepository
                 .findCars(PageRequest.of(page, Constants.LIMIT)).getContent();
-        long count = carRepository.count();
+        final long count = carRepository.count();
 
         return new ResponseCarDTO(cars, count);
     }
@@ -70,8 +70,12 @@ public class CarServiceImpl implements CarService {
     @Override
     public void deleteById(Long id) {
         notNull(id, "id is null");
-        final Car car =  carRepository.findById(id)
-                .orElseThrow(()-> new NoSuchEntityException("car not found with id" + id));
+        final Car car = carRepository.findById(id)
+                .orElseThrow(() -> new NoSuchEntityException("car not found with id" + id));
+        final User user = securityContextService.currentUser();
+        if (!car.getUserId().equals(user.getId())) {
+            throw new WrongOperationException("Car can't be deleted");
+        }
         carRepository.deleteById(car.getId());
     }
 }

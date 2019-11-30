@@ -1,10 +1,10 @@
 package com.trip.newway.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,6 +19,12 @@ public class Car {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "count_places")
+    private int countPlaces;
+
     @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

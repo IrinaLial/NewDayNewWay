@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
    User findByEmail (String email);
 
-   @Query(value = "select new com.trip.newway.dto.user.UserDTO(u.id, u.name) from User u")
+   @Query(value = "select new com.trip.newway.dto.user.UserDTO(u.id, u.name, u.email, u.isActive) from User u")
    Page<UserDTO> findUsers(Pageable pageable);
 
 }
