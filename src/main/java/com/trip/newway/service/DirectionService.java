@@ -25,7 +25,7 @@ public interface DirectionService {
      */
     boolean applyUser(Long userId, Long id);
 
-    DirectionDTO findByName(String name);
+    DirectionDTO findWithId(Long id);
 
     List<DirectionDTO> findWithUserId(Long userId, int page);
 

@@ -18,8 +18,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 public class DirectionDTO {
     private Long id;
-    private String from;
-    private String to;
+    private String name;
     private String date;
     private int freePlaces;
     private Double estimateTime;
@@ -27,9 +26,8 @@ public class DirectionDTO {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 
     public DirectionDTO(Long id, String from, String to, LocalDateTime date, int freePlaces, Double estimateTime) {
-        this.id = id;
-        this.from = from;
-        this.to = to;
+        this.id = id ;
+        this.name = from + " " + to;
         this.date = dateTimeFormatter.format(date);
         this.freePlaces = freePlaces;
         this.estimateTime = estimateTime;

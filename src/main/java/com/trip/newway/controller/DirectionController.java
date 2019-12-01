@@ -51,9 +51,9 @@ public class DirectionController {
         return new ResponseEntity<>(cancelTrip,HttpStatus.OK);
     }
 
-    @GetMapping("/findByName")
-    public ResponseEntity<DirectionDTO> findByName(@RequestParam String name) {
-        final DirectionDTO directionDTO = directionService.findByName(name);
+    @GetMapping("/findWithId")
+    public ResponseEntity<DirectionDTO> findWithId(@RequestParam Long id) {
+        final DirectionDTO directionDTO = directionService.findWithId(id);
         return new ResponseEntity<>(directionDTO, HttpStatus.OK);
     }
 

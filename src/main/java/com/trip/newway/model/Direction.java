@@ -46,8 +46,13 @@ public class Direction {
     @Column( name = "count_places")
     private int countPlaces;
 
+    @Column( name = "free_places")
+    private int freePlaces;
+
     @Column( name = "created_at")
     private LocalDateTime createdAt;
+
+
 
 
 }

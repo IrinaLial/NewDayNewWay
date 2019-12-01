@@ -160,7 +160,7 @@ public class DirectionServiceImpl implements DirectionService {
     }
 
     @Override
-    public DirectionDTO findByName(String name) {
-        return directionRepository.findByName(name);
+    public DirectionDTO findWithId(Long id) {
+        return directionRepository.findWithId(id);
     }
 }
