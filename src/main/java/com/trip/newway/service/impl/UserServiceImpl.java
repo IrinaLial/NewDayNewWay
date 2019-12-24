@@ -1,5 +1,7 @@
 package com.trip.newway.service.impl;
 
+import com.trip.newway.dto.NewDayNewWayResponse;
+import com.trip.newway.dto.ResponseDetail;
 import com.trip.newway.dto.user.ResponseUserDTO;
 import com.trip.newway.dto.user.SaveUsersDTO;
 import com.trip.newway.dto.user.UserDTO;
@@ -106,22 +108,18 @@ public class UserServiceImpl implements UserService {
         val passwordEncoder = new BCryptPasswordEncoder();
         final String encodePassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodePassword);
-        user.setActive(true);
         user.setCreatedAt(LocalDateTime.now());
 
         final Role role = roleRepository.findByName(Constants.ROLE_USER);
         user.setRole(role);
-        user.setLevelId(1L);
-        user.setActive(false);
-        user.setStatusId(Constants.EMPTY);
+        user.setLevel(Constants.LEVEL_NEW);
 
         final User savedUser = userRepository.save(user);
 
         val message = emailBuilder.buildMessageWithAttachments(savedUser);
         emailService.sendMessage(message);
 
-        return new UserDTO(savedUser.getId(), savedUser.getName(),
-                savedUser.getEmail(), savedUser.isActive());
+        return new UserDTO(savedUser.getId(), savedUser.getName(), savedUser.getEmail());
     }
 
     @Override
@@ -177,11 +175,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public NewDayNewWayResponse deleteById(Long id) {
         notNull(id, "id is null");
         final User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchEntityException("User no found with id: " + id));
-        userRepository.deleteById(user.getId());
+            .orElseThrow(() -> new NoSuchEntityException("User no found with id: " + id));
+        final Role role = roleRepository.findByName(Constants.ROLE_DELETED);
+        user.setRole(role);
+        userRepository.saveAndFlush(user);
+
+        return new NewDayNewWayResponse(new ResponseDetail());
     }
 
     private int getCode() {

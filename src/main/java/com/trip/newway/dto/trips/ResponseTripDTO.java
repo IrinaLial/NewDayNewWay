@@ -1,4 +1,4 @@
-package com.trip.newway.dto.direction;
+package com.trip.newway.dto.trips;
 
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResponseDirectionDTO {
-    List<DirectionDTO> directions;
-    private long total;
+public class ResponseTripDTO {
+    List<TripDTO> trips;
+    private long count;
 }

@@ -25,6 +25,9 @@ public class Car {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "status")
+    private int status;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }

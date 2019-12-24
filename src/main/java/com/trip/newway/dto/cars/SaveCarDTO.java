@@ -1,4 +1,4 @@
-package com.trip.newway.dto.car;
+package com.trip.newway.dto.cars;
 
 
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SavedCarDTO {
+public class SaveCarDTO {
     private String name;
+    private int countPlaces;
 }

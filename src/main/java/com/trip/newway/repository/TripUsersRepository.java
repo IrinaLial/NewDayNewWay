@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TripUsersRepository extends JpaRepository<TripUsers, Long> {
-    @Query("select new com.trip.newway.dto.email.EmailTripDTO (u.name, d.name, u.email) from  TripUsers tu, User u, Direction d where tu.directionId = :id and tu.userId = u.id and tu.directionId = d.id")
-    List<EmailTripDTO> findUsersWithTripId(@Param("id") Long id);
 
+    @Query("select new com.trip.newway.dto.email.EmailTripDTO (u.name, concat(t.placeFrom, ' ', t.placeTo) , u.email) from  TripUsers tu, User u, Trip t where tu.tripId = :id and tu.userId = u.id and tu.tripId = t.id")
+    List<EmailTripDTO> findUsersWithTripId(@Param("id") Long id);
 }

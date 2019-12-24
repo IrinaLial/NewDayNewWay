@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "password_recovery")
 public class PasswordRecovery {
     @Id

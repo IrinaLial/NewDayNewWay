@@ -1,4 +1,4 @@
-package com.trip.newway.dto.car;
+package com.trip.newway.dto.cars;
 
 import lombok.*;
 
@@ -9,4 +9,5 @@ import lombok.*;
 public class CarDTO {
     private Long id;
     private String name;
+    private int countPlaces;
 }

@@ -10,4 +10,5 @@ public class ReviewDTO {
     private Long id;
     private Integer stars;
     private String recommendations;
+    private String user;
 }

@@ -1,5 +1,6 @@
 package com.trip.newway.service;
 
+import com.trip.newway.dto.NewDayNewWayResponse;
 import com.trip.newway.dto.user.ResponseUserDTO;
 import com.trip.newway.dto.user.SaveUsersDTO;
 import com.trip.newway.dto.user.UserDTO;
@@ -18,7 +19,7 @@ public interface UserService {
 
     ResponseUserDTO findAll(int page);
 
-    void deleteById(Long id);
+    NewDayNewWayResponse deleteById(Long id);
 
 
 }

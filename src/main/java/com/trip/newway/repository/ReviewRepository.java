@@ -9,12 +9,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-
-
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query("select new com.trip.newway.dto.review.ReviewDTO (r.id, r.stars,r.recommendations) from Review r where r.stars = :stars")
+
+    @Query("select new com.trip.newway.dto.review.ReviewDTO (r.id, r.stars,r.text, '') from Review r where r.stars = :stars")
     ReviewDTO findByStars(@Param("stars") Integer stars);
 
-    @Query(value = "select new com.trip.newway.dto.review.ReviewDTO(r.id, r.stars, r.recommendations) from Review r")
+    @Query(value = "select new com.trip.newway.dto.review.ReviewDTO(r.id, r.stars, r.text, '') from Review r")
     Page<ReviewDTO> findReviews(Pageable pageable);
 }

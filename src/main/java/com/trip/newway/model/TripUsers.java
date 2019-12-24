@@ -14,8 +14,8 @@ public class TripUsers {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "direction_id")
-    private Long directionId;
+    @Column(name = "trip_id")
+    private Long tripId;
     @Column(name = "user_id")
     private Long userId;
 

@@ -15,13 +15,8 @@ public class Support {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "subject")
-    private String subject;
-
     @Column(name = "text")
     private String text;
-
     @Column(name = "user_id")
     private Long userId;
 }

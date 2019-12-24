@@ -1,19 +1,22 @@
 package com.trip.newway.service;
 
-import com.trip.newway.dto.car.CarDTO;
-import com.trip.newway.dto.car.ResponseCarDTO;
-import com.trip.newway.dto.car.SavedCarDTO;
+import com.trip.newway.dto.NewDayNewWayResponse;
+import com.trip.newway.dto.cars.CarDTO;
+import com.trip.newway.dto.cars.ResponseCarDTO;
+import com.trip.newway.dto.cars.SaveCarDTO;
 
 import java.util.List;
 
+/**
+ * @author Igor Hnes on 24.12.2019.
+ */
 public interface CarService {
 
-    CarDTO save(SavedCarDTO car);
+    CarDTO save(SaveCarDTO saveCarDTO);
 
     ResponseCarDTO findAll(int page);
 
     List<CarDTO> findWithUserId(Long userId);
 
-    void deleteById(Long id);
-
+    NewDayNewWayResponse deleteById(Long id);
 }

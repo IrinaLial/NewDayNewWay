@@ -1,6 +1,6 @@
 package com.trip.newway.repository;
 
-import com.trip.newway.dto.car.CarDTO;
+import com.trip.newway.dto.cars.CarDTO;
 import com.trip.newway.model.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +14,10 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
 
-    @Query("select new com.trip.newway.dto.car.CarDTO (c.id, c.name) from Car c, User u where c.userId = u.id and u.id = :userId")
+    @Query("select new com.trip.newway.dto.cars.CarDTO(c.id, c.name, c.countPlaces) from Car c, User u where c.userId = u.id and u.id = :userId")
     List<CarDTO> findWithUserId(@Param("userId") Long userId);
 
 
-    @Query(value = "select new com.trip.newway.dto.car.CarDTO(c.id, c.name) from Car c")
+    @Query(value = "select new com.trip.newway.dto.cars.CarDTO(c.id, c.name, c.countPlaces) from Car c")
     Page<CarDTO> findCars(Pageable pageable);
 }

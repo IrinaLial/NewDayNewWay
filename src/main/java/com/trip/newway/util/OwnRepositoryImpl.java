@@ -1,6 +1,5 @@
 package com.trip.newway.util;
 
-import com.trip.newway.dto.direction.DirectionDTO;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Column;

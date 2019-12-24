@@ -2,9 +2,11 @@ package com.trip.newway.service.impl;
 
 import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
 import com.trip.newway.auth.service.SecurityContextService;
-import com.trip.newway.dto.car.CarDTO;
-import com.trip.newway.dto.car.ResponseCarDTO;
-import com.trip.newway.dto.car.SavedCarDTO;
+import com.trip.newway.dto.NewDayNewWayResponse;
+import com.trip.newway.dto.ResponseDetail;
+import com.trip.newway.dto.cars.CarDTO;
+import com.trip.newway.dto.cars.ResponseCarDTO;
+import com.trip.newway.dto.cars.SaveCarDTO;
 import com.trip.newway.exception.WrongOperationException;
 import com.trip.newway.model.Car;
 import com.trip.newway.model.User;
@@ -24,6 +26,9 @@ import java.util.List;
 
 import static org.springframework.util.Assert.notNull;
 
+/**
+ * @author Igor Hnes on 24.12.2019.
+ */
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -32,19 +37,22 @@ public class CarServiceImpl implements CarService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private SecurityContextService securityContextService;
 
     @Override
-    public CarDTO save(SavedCarDTO carDTO) {
-        Assert.notNull(carDTO, "Car is null");
+    public CarDTO save(SaveCarDTO saveCarDTO) {
+        Assert.notNull(saveCarDTO, "Car is null");
         val user = securityContextService.currentUser();
         Car car = new Car();
-        car.setName(carDTO.getName());
+        car.setName(saveCarDTO.getName());
         car.setUserId(user.getId());
+        car.setCountPlaces(saveCarDTO.getCountPlaces());
+        car.setStatus(Constants.CAR_ACTIVE);
         car.setCreatedAt(LocalDateTime.now());
         Car savedCar = carRepository.save(car);
-        return new CarDTO(savedCar.getId(), savedCar.getName());
+        return new CarDTO(savedCar.getId(), savedCar.getName(), saveCarDTO.getCountPlaces());
     }
 
     @Override
@@ -68,7 +76,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public NewDayNewWayResponse deleteById(Long id) {
         notNull(id, "id is null");
         final Car car = carRepository.findById(id)
                 .orElseThrow(() -> new NoSuchEntityException("car not found with id" + id));
@@ -76,6 +84,8 @@ public class CarServiceImpl implements CarService {
         if (!car.getUserId().equals(user.getId())) {
             throw new WrongOperationException("Car can't be deleted");
         }
-        carRepository.deleteById(car.getId());
+        car.setStatus(Constants.CAR_DELETED);
+        carRepository.saveAndFlush(car);
+        return new NewDayNewWayResponse(new ResponseDetail());
     }
 }

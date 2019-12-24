@@ -1,6 +1,7 @@
 package com.trip.newway.service.impl;
 
 import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
+import com.trip.newway.auth.service.SecurityContextService;
 import com.trip.newway.dto.review.ResponseReviewDTO;
 import com.trip.newway.dto.review.ReviewDTO;
 import com.trip.newway.dto.review.SavedReviewDTO;
@@ -8,6 +9,7 @@ import com.trip.newway.model.Review;
 import com.trip.newway.repository.ReviewRepository;
 import com.trip.newway.service.ReviewService;
 import com.trip.newway.util.Constants;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,15 +26,19 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private SecurityContextService securityContextService;
+
     @Override
     public ReviewDTO save(SavedReviewDTO reviewDTO) {
         Assert.notNull(reviewDTO, "place is null");
+        val user = securityContextService.currentUser();
         Review review = new Review();
         review.setStars(reviewDTO.getStars());
-        review.setRecommendations(reviewDTO.getRecommendations());
-
+        review.setText(reviewDTO.getRecommendations());
+        review.setUserId(user.getId());
         Review savedReview = reviewRepository.save(review);
-        return new ReviewDTO(savedReview.getId(), savedReview.getStars(), savedReview.getRecommendations());
+        return new ReviewDTO(savedReview.getId(), savedReview.getStars(), savedReview.getText(), user.getName());
     }
 
     @Override
